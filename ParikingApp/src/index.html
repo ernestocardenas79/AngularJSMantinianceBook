@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="parking">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parking App</title>
+    <script src="lib/angular.min.js"></script>
+    <script>
+      var parking = angular.module("parking", []);
+      parking.controller("parkingCtrl", function ($scope) {
+        $scope.cars = [
+          { plate: "6MBV006" },
+          { plate: "5BBM299" },
+          { plate: "5A0J230" },
+        ];
+
+        $scope.park = function (car) {
+          $scope.cars.push(angular.copy(car));
+          delete $scope.car;
+        };
+      });
+    </script>
   </head>
-  <body></body>
+  <body ng-controller="parkingCtrl">
+    <h3>[Packt] Parking</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Plate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="car in cars">
+          <td>{{car.plate}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <input type="text" ng-model="car.plate" />
+    <button ng-click="park(car)">Park</button>
+  </body>
 </html>
